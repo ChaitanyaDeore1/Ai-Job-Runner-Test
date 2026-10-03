@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Job Runner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-idem="off">
+  <header class="top">
+    <div class="wrap top-inner">
+      <div>
+        <h1>AI Job Runner</h1>
+        <p class="tag">See what happens when the same request arrives twice.</p>
+      </div>
+      <div class="mode-pill" id="modePill"><span class="dot"></span><span id="modePillText">Unprotected</span></div>
+    </div>
+
+    <!-- Live pipeline: a packet travels Browser -> API -> Job -> Mock AI -> Result -->
+    <div class="wrap">
+      <div class="pipeline" aria-label="Request pipeline">
+        <div class="rail"></div>
+        <div class="packets" id="packets"></div>
+        <div class="station"><i></i><b>Browser</b><small>you click</small></div>
+        <div class="station"><i></i><b>API</b><small>checks the key</small></div>
+        <div class="station"><i></i><b>Job</b><small>gets created</small></div>
+        <div class="station"><i></i><b>Mock AI</b><small>3 s of "thinking"</small></div>
+        <div class="station"><i></i><b>Result</b><small>shown below</small></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <div class="panel">
+        <h2>Send a request</h2>
+        <label for="text" class="field">Text to analyze</label>
+        <textarea id="text" rows="3">I love building small projects, this is a great way to learn.</textarea>
+
+        <div class="switch-row">
+          <button id="idem" class="switch" role="switch" aria-checked="false" aria-label="Idempotency">
+            <span class="knob"></span>
+          </button>
+          <div>
+            <b>Idempotency <span id="idemState">off</span></b>
+            <p id="idemDesc">Every request creates a new job, even an exact repeat.</p>
+          </div>
+        </div>
+
+        <div class="keybox">
+          <span class="field">Idempotency-Key header</span>
+          <code id="keyBox">not sent</code>
+          <button id="newKey" class="link" type="button">Use a new key</button>
+        </div>
+
+        <div class="actions">
+          <button id="analyze" class="btn primary">Analyze</button>
+          <button id="twice" class="btn">Send twice, instantly</button>
+          <button id="reset" class="btn ghost">Clear all</button>
+        </div>
+        <p class="status" id="msg" role="status" aria-live="polite">Click Analyze once, then try double-clicking it.</p>
+      </div>
+
+      <div class="panel verdict" id="verdict">
+        <h2>What the server did</h2>
+        <div class="flow">
+          <div><strong id="sReq">0</strong><span>requests received</span></div>
+          <div class="arrow" aria-hidden="true"></div>
+          <div><strong id="sJobs">0</strong><span>jobs created</span></div>
+        </div>
+        <p class="verdict-text" id="verdictText">Nothing sent yet.</p>
+        <dl class="mini">
+          <div><dt>Repeats answered with the old job</dt><dd id="sRep">0</dd></div>
+          <div><dt>Mock AI runs finished</dt><dd id="sAi">0</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="jobs-section">
+      <div class="jobs-head">
+        <h2>Jobs</h2>
+        <span class="count" id="jobCount">0 jobs</span>
+      </div>
+      <div id="jobs" class="jobs">
+        <div class="empty">No jobs yet. Press Analyze to create the first one.</div>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

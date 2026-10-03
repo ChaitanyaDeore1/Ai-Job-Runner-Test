@@ -1,0 +1,14 @@
+{
+  "name": "ai-job-runner",
+  "version": "1.0.0",
+  "description": "Tiny demo to learn idempotency: Browser -> API -> Job -> Mock AI -> Result",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

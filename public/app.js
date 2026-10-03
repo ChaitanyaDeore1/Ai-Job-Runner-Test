@@ -18,7 +18,6 @@ function refreshMode() {
   $('idemDesc').textContent = on
     ? 'Repeat requests with the same key return the job that already exists.'
     : 'Every request creates a new job, even an exact repeat.';
-  $('modePillText').textContent = on ? 'Protected by idempotency' : 'Unprotected';
   $('keyBox').textContent = on ? currentKey : 'not sent';
 }
 idemBtn.addEventListener('click', () => { idemBtn.setAttribute('aria-checked', String(!idemOn())); refreshMode(); });
